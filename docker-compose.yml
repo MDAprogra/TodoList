@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16.1
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "todolist"
+      POSTGRES_USER: "todolist"
+      POSTGRES_PASSWORD: "todolist"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U todolist"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
