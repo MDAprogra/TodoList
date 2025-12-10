@@ -7,6 +7,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox"
 import { Badge } from "@/components/ui/badge"
 import { Fragment } from "react/jsx-runtime"
+import { cx } from "class-variance-authority"
 
 export const TodoListItem = async () => {
     const todos =await prisma.todo.findMany();
@@ -17,7 +18,7 @@ export const TodoListItem = async () => {
             <Item variant="outline" key={todo.id}>
                 <Checkbox id="status" defaultChecked={todo.status === "CHECKED"}  />
                 <ItemContent>
-                        <ItemTitle>{todo.label}</ItemTitle>
+                        <ItemTitle className={cx(todo.status==="CHECKED"?"line-through":"")}>{todo.label}</ItemTitle>
                     </ItemContent>
                     {todo.priority === "HIGH" &&
                     <Badge variant="destructive">{todo.priority}</Badge>
