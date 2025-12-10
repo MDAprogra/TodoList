@@ -3,17 +3,23 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { cx } from 'class-variance-authority';
 import type { Todo } from '@/generated/prisma/client';
+import { ComponentProps } from 'react';
+import { useMutation } from '@tanstack/react-query';
 
 export type TodoListItemProps = {
   todo: Todo;
-};
+  onChange : (newStatus : 'CHECKED' | 'NOT_CHECKED')=>void
+} & Omit<ComponentProps<typeof Item>, 'onChange'>;
 
-export const TodoListItem = ({ todo, ...rest }: TodoListItemProps) => {
+export const TodoListItem = ({ todo, onChange ,...rest }: TodoListItemProps) => {
+
+  
+
   return (
     <>
       <div className="ml-64 mr-64">
         <Item {...rest} variant="outline">
-          <Checkbox id="status" defaultChecked={todo.status === 'CHECKED'} />
+          <Checkbox id="status" checked={todo.status === 'CHECKED'} onCheckedChange={(e)=>{onChange(e?'CHECKED':'NOT_CHECKED')}} />
           <ItemContent>
             <ItemTitle
               className={cx(todo.status === 'CHECKED' ? 'line-through' : '')}
