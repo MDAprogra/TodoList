@@ -6,23 +6,21 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-    const todo = await req.json();
+  const todo = await req.json();
 
-    const upsertTodo = await prisma.todo.upsert(
-        {
-            where:{
-                id: todo.id,
-                // Autre(s) si besoin ...
-            },
-            update:{
-                status : todo.status === 'CHECKED'? 'NOT_CHECKED':'CHECKED',
-                // Autre(s) si besoin ...
-            },
-            create:{
-                label : todo.label,
-                // Autre(s) si besoin ...
-            },
-        }
-    )
-    return Response.json({ data: upsertTodo });
+  const upsertTodo = await prisma.todo.upsert({
+    where: {
+      id: todo.id,
+      // Autre(s) si besoin ...
+    },
+    update: {
+      status: todo.status === 'CHECKED' ? 'NOT_CHECKED' : 'CHECKED',
+      // Autre(s) si besoin ...
+    },
+    create: {
+      label: todo.label,
+      // Autre(s) si besoin ...
+    },
+  });
+  return Response.json({ data: upsertTodo });
 }

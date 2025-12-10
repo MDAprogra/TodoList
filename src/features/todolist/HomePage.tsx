@@ -14,20 +14,19 @@ export const HomePage = () => {
     },
   });
 
-  const {mutate, isPending} = useMutation({
-    mutationFn:  async (todo : Todo) => {
-      const result = await fetch ('/api/todo',
-        {
-          method: 'POST',
-          body: JSON.stringify(todo),
-        });
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (todo: Todo) => {
+      const result = await fetch('/api/todo', {
+        method: 'POST',
+        body: JSON.stringify(todo),
+      });
 
-        return (await result.json() as {data : Todo})
+      return (await result.json()) as { data: Todo };
     },
     onSuccess: (_data, _vars, _onMutate, ctx) => {
-      ctx.client.invalidateQueries({queryKey: ['todos']});
-    }
-  })
+      ctx.client.invalidateQueries({ queryKey: ['todos'] });
+    },
+  });
 
   const todos = data?.data || [];
 
@@ -44,7 +43,11 @@ export const HomePage = () => {
           </div>
         )}
         {todos.map((todo) => (
-          <TodoListItem todo={todo} key={todo.id} onChange={(v)=>mutate(todo)}/>
+          <TodoListItem
+            todo={todo}
+            key={todo.id}
+            onChange={(v) => mutate(todo)}
+          />
         ))}
       </div>
     </>
