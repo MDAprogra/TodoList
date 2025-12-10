@@ -1,4 +1,4 @@
-import { TodoListItem } from "@/components/todolistItem"
+import { TodoListItem } from "@/features/todolist/todolistItem"
 
 export const HomePage = async () => {
     return (
