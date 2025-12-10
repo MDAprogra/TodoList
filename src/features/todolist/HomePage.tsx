@@ -14,7 +14,7 @@ export const HomePage = () => {
     },
   });
 
-  const { mutate, isPending } = useMutation({
+  const { mutate} = useMutation({
     mutationFn: async (todo: Todo) => {
       const result = await fetch('/api/todo', {
         method: 'POST',
@@ -46,7 +46,7 @@ export const HomePage = () => {
           <TodoListItem
             todo={todo}
             key={todo.id}
-            onChange={(v) => mutate(todo)}
+            onChange={() => mutate(todo)}
           />
         ))}
       </div>
