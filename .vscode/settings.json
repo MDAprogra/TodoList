@@ -10,5 +10,6 @@
       "database": "todolist",
       "username": "todolist"
     }
-  ]
+  ],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }
