@@ -1,24 +1,19 @@
-import 'dotenv/config'
-import { prisma } from "@/lib/prisma";
-import { error } from "console";
+import 'dotenv/config';
+import { prisma } from '@/lib/prisma';
+import { error } from 'console';
 import { faker } from '@faker-js/faker';
 
 const todosToCreate = Array.from(Array(10)).map(() => ({
-    label : faker.lorem.sentence(),
-    priority : faker.helpers.arrayElement(['HIGH','MEDIUM','LOW']),
-    status : faker.helpers.arrayElement(['CHECKED','NOT_CHECKED'])
-}))
+  label: faker.lorem.sentence(),
+  priority: faker.helpers.arrayElement(['HIGH', 'MEDIUM', 'LOW']),
+  status: faker.helpers.arrayElement(['CHECKED', 'NOT_CHECKED']),
+}));
 
-try{
-const createdTodo = await prisma.todo.createMany(
-    {
-        data : todosToCreate
-    }   
-)
-console.log('✅ Todos created ', createdTodo);
+try {
+  const createdTodo = await prisma.todo.createMany({
+    data: todosToCreate,
+  });
+  console.log('✅ Todos created ', createdTodo);
+} catch {
+  console.log('❌ Error while creating todo', error);
 }
-catch{
-    console.log('❌ Error while creating todo', error);
-}
-
-
