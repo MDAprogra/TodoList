@@ -1,5 +1,3 @@
-
-import { prisma } from "@/lib/prisma"
 import {
   Item,
   ItemContent,
@@ -8,14 +6,22 @@ import {
 import { Checkbox } from "@/components/ui/checkbox"
 import { Badge } from "@/components/ui/badge"
 import { cx } from "class-variance-authority"
+import type { Todo } from "@/generated/prisma/client"
 
-export const TodoListItem = async () => {
-    const todos =await prisma.todo.findMany();
+export type TodoListItemProps = {
+    todo : Todo,
+}
+
+export const TodoListItem = ({
+    todo,
+    ...rest
+}: TodoListItemProps
+) => {
+
     return (
         <>
-        <div className="ml-64 mr-64 mt-12">
-        {todos.map(todo =>(
-            <Item variant="outline" key={todo.id}>
+        <div className="ml-64 mr-64">
+            <Item {...rest} variant="outline">
                 <Checkbox id="status" defaultChecked={todo.status === "CHECKED"}  />
                 <ItemContent>
                         <ItemTitle className={cx(todo.status==="CHECKED"?"line-through":"")}>{todo.label}</ItemTitle>
@@ -30,7 +36,6 @@ export const TodoListItem = async () => {
                     <Badge className="bg-emerald-500" variant="outline">{todo.priority}</Badge>
                     }
             </Item>
-        ))}
         </div>
         </>
     )
