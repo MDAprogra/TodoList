@@ -3,6 +3,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { TodoListItem } from '@/features/todolist/todolistItem';
 import { Todo } from '@/generated/prisma/client';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { InputItem } from './inputItem';
 
 export const HomePage = () => {
   const { data, isLoading } = useQuery({
@@ -36,6 +37,9 @@ export const HomePage = () => {
         <h1 className="mb-4 text-4xl font-bold tracking-tight text-heading md:text-5xl lg:text-6xl items-center p-3">
           Todo List
         </h1>
+
+        <InputItem/>
+
         {isLoading && (
           <div className="flex gap-2 items-center">
             <Spinner />
