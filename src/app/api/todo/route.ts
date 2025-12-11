@@ -18,6 +18,11 @@ export async function GET() {
 export async function POST(req: Request) {
   const todo = await req.json();
 
+  if(todo.label === "")
+  {
+    todo.label = null 
+  }
+
   try {
     const upsertTodo = await prisma.todo.upsert({
       where: {

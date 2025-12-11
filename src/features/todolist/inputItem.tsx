@@ -3,6 +3,8 @@ import { Input } from '@/components/ui/input';
 import { Todo } from '@/generated/prisma/client';
 import { useMutation } from '@tanstack/react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { toast } from "sonner"
+
 
 type CreateTodoFormValues = {
   label: string;
@@ -16,12 +18,22 @@ export const InputItem = () => {
         body: JSON.stringify(todo),
       });
 
+      if (!result.ok){
+        throw new Error('Verifier tous les champs')
+      }
+
       return (await result.json()) as { data: Todo };
     },
     onSuccess: (_data, _vars, _onMutate, ctx) => {
       ctx.client.invalidateQueries({ queryKey: ['todos'] });
       reset();
     },
+    onError: (error)=>{
+        console.log('error : ',error.message)
+        toast.error("Oups ...",{
+            description: error.message
+        })
+    }
   });
 
   const {
@@ -48,9 +60,7 @@ export const InputItem = () => {
         <FieldLabel htmlFor="input-id">Label</FieldLabel>
         <Input
           disabled={isPending}
-          {...register('label', {
-            required: "Veuillez completer le champ 'LABEL' !",
-          })}
+          {...register('label')}
         />
 
         <Input type="submit" disabled={isPending} />
