@@ -3,7 +3,11 @@ import { Calendar } from '@/components/ui/calendar';
 import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import {
   Select,
   SelectContent,
@@ -23,15 +27,16 @@ import { toast } from 'sonner';
 type CreateTodoFormValues = {
   label: string;
   priority: 'LOW' | 'MEDIUM' | 'HIGH';
-  deadline : Date;
+  deadline: Date;
 };
 
 export const InputItem = () => {
-    const [open, setOpen] = React.useState(false)
-
+  const [open, setOpen] = React.useState(false);
 
   const { mutate, isPending } = useMutation({
-    mutationFn: async (todo: Omit<CreateTodoFormValues, 'deadline'> & {deadline: string} ) => {
+    mutationFn: async (
+      todo: Omit<CreateTodoFormValues, 'deadline'> & { deadline: string }
+    ) => {
       const result = await fetch('/api/todo', {
         method: 'POST',
         body: JSON.stringify(todo),
@@ -106,35 +111,40 @@ export const InputItem = () => {
           name="deadline"
           control={control}
           render={({ field }) => (
-        <div className="flex flex-col gap-3">
-            <Label htmlFor="date" className="px-1">
-        Deadline
-      </Label>
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            id="date"
-            className="w-48 justify-between font-normal"
-          >
-            {field.value ? field.value.toLocaleDateString() : "Select date"}
-            <ChevronDownIcon />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto overflow-hidden p-0" align="start">
-          <Calendar
-            mode="single"
-            selected={field.value}
-            captionLayout="dropdown"
-            onSelect={(date) => {
-              field.onChange(date)
-              setOpen(false)              
-            }}
-          />
-        </PopoverContent>
-      </Popover>
-    </div>
-    )}
+            <div className="flex flex-col gap-3">
+              <Label htmlFor="date" className="px-1">
+                Deadline
+              </Label>
+              <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    id="date"
+                    className="w-48 justify-between font-normal"
+                  >
+                    {field.value
+                      ? field.value.toLocaleDateString()
+                      : 'Select date'}
+                    <ChevronDownIcon />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent
+                  className="w-auto overflow-hidden p-0"
+                  align="start"
+                >
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    captionLayout="dropdown"
+                    onSelect={(date) => {
+                      field.onChange(date);
+                      setOpen(false);
+                    }}
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+          )}
         />
 
         <Input type="submit" disabled={isPending} />
