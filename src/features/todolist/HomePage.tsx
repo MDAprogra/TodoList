@@ -38,7 +38,7 @@ export const HomePage = () => {
           Todo List
         </h1>
 
-        <InputItem/>
+        <InputItem />
 
         {isLoading && (
           <div className="flex gap-2 items-center">
