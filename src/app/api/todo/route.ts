@@ -30,10 +30,15 @@ export async function POST(req: Request) {
     todo.priority = null;
   }
 
+  if (todo.deadline)
+  {
+    todo.deadline = new Date(todo.deadline);
+  }
+
   try {
     const upsertTodo = await prisma.todo.upsert({
       where: {
-        id: todo.id,
+        id: todo.id??'',
         // Autre(s) si besoin ...
       },
       update: {
@@ -42,11 +47,13 @@ export async function POST(req: Request) {
       },
       create: {
         label: todo.label,
-        priority: todo.priority,
+        priority: todo.priority??'LOW',
+        deadline: todo.deadline??undefined,
       },
     });
     return Response.json({ data: upsertTodo }, { status: 200 });
   } catch (error) {
+    console.log(error)
     if (error instanceof PrismaClientValidationError) {
       return Response.json({ message: error.message }, { status: 400 });
     }
