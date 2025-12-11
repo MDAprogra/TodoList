@@ -1,6 +1,5 @@
 import {
   Field,
-  FieldDescription,
   FieldError,
   FieldLabel,
 } from '@/components/ui/field';
@@ -14,7 +13,7 @@ type CreateTodoFormValues = {
 };
 
 export const InputItem = () => {
-    const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async (todo: Todo) => {
       const result = await fetch('/api/todo', {
         method: 'POST',
@@ -33,31 +32,32 @@ export const InputItem = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,  
+    reset,
   } = useForm<CreateTodoFormValues>();
-const onSubmit: SubmitHandler<CreateTodoFormValues> = (data) => {
+  const onSubmit: SubmitHandler<CreateTodoFormValues> = (data) => {
     mutate({
-        id: '',
-        label: data.label,
-        status: 'NOT_CHECKED',
-        priority: 'MEDIUM',
-        deadline: null,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+      id: '',
+      label: data.label,
+      status: 'NOT_CHECKED',
+      priority: 'MEDIUM',
+      deadline: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     });
-    
-};
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex gap-3 w-full p-3">
       <Field>
-        <FieldLabel htmlFor="input-id">Label</FieldLabel>
+        <FieldLabel htmlFor="input-id" >Label</FieldLabel>
         <Input
+        disabled={isPending}
           {...register('label', {
             required: "Veuillez completer le champ 'LABEL' !",
           })}
         />
-        <Input type="submit" />
+        
+        <Input type="submit" disabled={isPending} />
         {errors.label && <FieldError>{errors.label.message}</FieldError>}
       </Field>
     </form>
