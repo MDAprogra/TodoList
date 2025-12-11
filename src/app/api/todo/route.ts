@@ -48,6 +48,7 @@ export async function POST(req: Request) {
         label: todo.label,
         priority: todo.priority ?? 'LOW',
         deadline: todo.deadline ?? undefined,
+        
       },
     });
     return Response.json({ data: upsertTodo }, { status: 200 });
