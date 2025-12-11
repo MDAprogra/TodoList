@@ -14,7 +14,7 @@ export const HomePage = () => {
     },
   });
 
-  const {mutate} = useMutation({
+  const { mutate } = useMutation({
     mutationFn: async (todo: Todo) => {
       const result = await fetch('/api/todo', {
         method: 'POST',

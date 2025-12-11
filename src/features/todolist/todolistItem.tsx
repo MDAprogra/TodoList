@@ -6,7 +6,6 @@ import type { Todo } from '@/generated/prisma/client';
 import { ComponentProps } from 'react';
 import dayjs from 'dayjs';
 
-
 export type TodoListItemProps = {
   todo: Todo;
   onChange: (newStatus: 'CHECKED' | 'NOT_CHECKED') => void;
