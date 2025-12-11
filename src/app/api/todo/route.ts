@@ -18,11 +18,15 @@ export async function GET() {
 export async function POST(req: Request) {
   const todo = await req.json();
 
-  if(todo.label === "")
-  {
-    todo.label = null 
+  if (todo.label === '') {
+    todo.label = null;
   }
 
+  if (todo.priority !== 'LOW' && todo.priority !== 'MEDIUM' && todo.priority !== 'HIGH')
+  {
+    todo.priority = null
+  }
+  
   try {
     const upsertTodo = await prisma.todo.upsert({
       where: {
@@ -35,6 +39,7 @@ export async function POST(req: Request) {
       },
       create: {
         label: todo.label,
+        priority: todo.priority
       },
     });
     return Response.json({ data: upsertTodo }, { status: 200 });

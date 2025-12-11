@@ -1,13 +1,15 @@
 import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Todo } from '@/generated/prisma/client';
 import { useMutation } from '@tanstack/react-query';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from "sonner"
 
 
 type CreateTodoFormValues = {
   label: string;
+  priority : 'LOW' | 'MEDIUM' | 'HIGH'
 };
 
 export const InputItem = () => {
@@ -29,7 +31,6 @@ export const InputItem = () => {
       reset();
     },
     onError: (error)=>{
-        console.log('error : ',error.message)
         toast.error("Oups ...",{
             description: error.message
         })
@@ -41,13 +42,14 @@ export const InputItem = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    control
   } = useForm<CreateTodoFormValues>();
   const onSubmit: SubmitHandler<CreateTodoFormValues> = (data) => {
     mutate({
       id: '',
       label: data.label,
       status: 'NOT_CHECKED',
-      priority: 'MEDIUM',
+      priority: data.priority,
       deadline: null,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -62,6 +64,32 @@ export const InputItem = () => {
           disabled={isPending}
           {...register('label')}
         />
+
+        <Controller
+              name="priority"
+              control={control}
+              render={({ field, fieldState }) => (
+                <Field>
+                    <FieldLabel htmlFor="input-priority">Priority</FieldLabel>
+                <Select
+                    name={field.name}
+                    value={field.value}
+                    onValueChange={field.onChange}>
+      <SelectTrigger className="w-[180px]">
+        <SelectValue placeholder="Select a priority status" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Priority</SelectLabel>
+          <SelectItem value="LOW">Low</SelectItem>
+          <SelectItem value="MEDIUM">Medium</SelectItem>
+          <SelectItem value="HIGH">High</SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+    </Field>
+              )}
+            />
 
         <Input type="submit" disabled={isPending} />
         {errors.label && <FieldError>{errors.label.message}</FieldError>}

@@ -9,8 +9,8 @@ const queryClient = new QueryClient();
 export const Providers = ({ children }: { children: ReactNode }) => {
   return (
     <>
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    <Toaster position="top-right" richColors closeButton  />
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <Toaster position="top-right" richColors closeButton />
     </>
   );
 };
