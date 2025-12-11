@@ -6,8 +6,6 @@
 */
 -- AlterTable
 ALTER TABLE "Todo" ADD COLUMN     "isDeleted" BOOLEAN;
-
 UPDATE "Todo"
 set "isDeleted" = false;
-
 ALTER TABLE "Todo" ALTER COLUMN "isDeleted" SET NOT NULL
