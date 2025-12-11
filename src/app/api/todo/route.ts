@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma';
+import { PrismaClientValidationError } from '@prisma/client/runtime/client';
 
 export async function GET() {
   const todos = await prisma.todo.findMany({
@@ -7,7 +8,7 @@ export async function GET() {
         status: 'desc',
       },
       {
-        createdAt: 'asc',
+        createdAt: 'desc',
       },
     ],
   });
@@ -17,6 +18,7 @@ export async function GET() {
 export async function POST(req: Request) {
   const todo = await req.json();
 
+  try{
   const upsertTodo = await prisma.todo.upsert({
     where: {
       id: todo.id,
@@ -28,8 +30,15 @@ export async function POST(req: Request) {
     },
     create: {
       label: todo.label,
-      // Autre(s) si besoin ...
     },
   });
-  return Response.json({ data: upsertTodo });
+  return Response.json({ data: upsertTodo }, {status: 200})}
+  catch (error)
+  {
+    if (error instanceof PrismaClientValidationError)
+    {
+      return Response.json({message : error.message},{status : 400})
+    }
+    return Response.json({message : error},{status : 400})
+  }
 }

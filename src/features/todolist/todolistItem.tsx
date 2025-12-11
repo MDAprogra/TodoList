@@ -35,7 +35,7 @@ export const TodoListItem = ({
             </ItemTitle>
           </ItemContent>
           <Badge variant={'outline'}>
-            {dayjs(todo.createdAt).format('DD MMMM YYYY HH:MM:ss')}
+            {dayjs(todo.createdAt).format('DD MMMM YYYY HH:mm:ss')}
           </Badge>
           {todo.priority === 'HIGH' && (
             <Badge variant="destructive">{todo.priority}</Badge>
