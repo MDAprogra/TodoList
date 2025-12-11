@@ -1,8 +1,4 @@
-import {
-  Field,
-  FieldError,
-  FieldLabel,
-} from '@/components/ui/field';
+import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Todo } from '@/generated/prisma/client';
 import { useMutation } from '@tanstack/react-query';
@@ -49,14 +45,14 @@ export const InputItem = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex gap-3 w-full p-3">
       <Field>
-        <FieldLabel htmlFor="input-id" >Label</FieldLabel>
+        <FieldLabel htmlFor="input-id">Label</FieldLabel>
         <Input
-        disabled={isPending}
+          disabled={isPending}
           {...register('label', {
             required: "Veuillez completer le champ 'LABEL' !",
           })}
         />
-        
+
         <Input type="submit" disabled={isPending} />
         {errors.label && <FieldError>{errors.label.message}</FieldError>}
       </Field>
