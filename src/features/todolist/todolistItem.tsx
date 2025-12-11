@@ -4,6 +4,8 @@ import { Badge } from '@/components/ui/badge';
 import { cx } from 'class-variance-authority';
 import type { Todo } from '@/generated/prisma/client';
 import { ComponentProps } from 'react';
+import dayjs from 'dayjs';
+
 
 export type TodoListItemProps = {
   todo: Todo;
@@ -33,6 +35,9 @@ export const TodoListItem = ({
               {todo.label}
             </ItemTitle>
           </ItemContent>
+          <Badge variant={'outline'}>
+            {dayjs(todo.createdAt).format('DD MMMM YYYY HH:MM:ss')}
+          </Badge>
           {todo.priority === 'HIGH' && (
             <Badge variant="destructive">{todo.priority}</Badge>
           )}
