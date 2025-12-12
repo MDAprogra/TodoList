@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import { Button } from '@/components/ui/button';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { Spinner } from '@/components/ui/spinner';
 
 export type TodoListItemProps = {
   todo: Todo;
@@ -19,10 +20,6 @@ export const TodoListItem = ({
   onChange,
   ...rest
 }: TodoListItemProps) => {
-
-
-
-  
   const { mutate, isPending } = useMutation({
     mutationFn: async () => {
       const result = await fetch(`/api/todo/${todo.id}`, {
@@ -79,12 +76,9 @@ export const TodoListItem = ({
             </Badge>
           )}
 
-          <Button
-          onClick={() => mutate()}
-          disabled={isPending}
-          >
-            {isPending ? 'Suppression...' : 'Delete'}
-            </Button>
+          <Button onClick={() => mutate()} disabled={isPending}>
+            {isPending ? <Spinner/> : 'Delete'}
+          </Button>
         </Item>
       </div>
     </>

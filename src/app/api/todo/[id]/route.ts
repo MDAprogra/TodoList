@@ -1,12 +1,15 @@
 import { prisma } from '@/lib/prisma';
 import { PrismaClientValidationError } from '@prisma/client/runtime/client';
 
-export async function DELETE(_req: Request,{
-  params,
-}: {
-  params: Promise<{ id: string }>
-}) {
-    const {id} = await params;
+export async function DELETE(
+  _req: Request,
+  {
+    params,
+  }: {
+    params: Promise<{ id: string }>;
+  }
+) {
+  const { id } = await params;
   try {
     const updatedTodo = await prisma.todo.update({
       where: {
