@@ -77,7 +77,7 @@ export const TodoListItem = ({
           )}
 
           <Button onClick={() => mutate()} disabled={isPending}>
-            {isPending ? <Spinner/> : 'Delete'}
+            {isPending ? <Spinner /> : 'Delete'}
           </Button>
         </Item>
       </div>
