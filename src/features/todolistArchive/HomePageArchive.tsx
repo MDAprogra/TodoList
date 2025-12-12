@@ -1,10 +1,10 @@
 'use client';
 
-import { Spinner } from "@/components/ui/spinner";
-import { Todo } from "@/generated/prisma/client";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { TodoListItem } from "../todolist/todolistItem";
-import Link from "next/link";
+import { Spinner } from '@/components/ui/spinner';
+import { Todo } from '@/generated/prisma/client';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { TodoListItem } from '../todolist/todolistItem';
+import Link from 'next/link';
 
 export const HomePageArchive = () => {
   const { data, isLoading } = useQuery({
@@ -39,7 +39,6 @@ export const HomePageArchive = () => {
           Todo List
         </h1>
         <Link href="/">Go Back</Link>
-
 
         {isLoading && (
           <div className="flex gap-2 items-center">
