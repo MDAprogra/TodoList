@@ -40,7 +40,7 @@ export const HomePageArchive = () => {
           Todo List
         </h1>
         <Button asChild variant={'outline'}>
-        <Link href="/">Go Back</Link>
+          <Link href="/">Go Back</Link>
         </Button>
 
         {isLoading && (
