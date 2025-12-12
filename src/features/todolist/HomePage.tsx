@@ -46,7 +46,7 @@ export const HomePage = () => {
           Todo List
         </h1>
         <Button asChild variant={'outline'}>
-          <Link href="/archive">Archive</Link>
+          <Link href="/app/archive">Archive</Link>
         </Button>
 
         <Button

@@ -26,7 +26,14 @@ export async function GET(
   return Response.json({ data: todos });
 }
 
-export async function POST(req: Request) {
+export async function POST(
+  req: Request,
+  {
+    params,
+  }: {
+    params: Promise<{ idUser: string }>;
+  }
+) {
   const todo = await req.json();
 
   if (todo.label === '') {
@@ -60,6 +67,7 @@ export async function POST(req: Request) {
         priority: todo.priority ?? 'LOW',
         deadline: todo.deadline ?? undefined,
         isDeleted: false,
+        userId: (await params).idUser,
       },
     });
     return Response.json({ data: upsertTodo }, { status: 200 });

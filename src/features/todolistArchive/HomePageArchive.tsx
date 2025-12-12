@@ -6,12 +6,15 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { TodoListItem } from '../todolist/todolistItem';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { authClient } from '@/lib/auth-client';
 
 export const HomePageArchive = () => {
+
+  const { data: session } = authClient.useSession();
   const { data, isLoading } = useQuery({
-    queryKey: ['todos'],
+    queryKey: ['todos',session?.user.id],
     queryFn: async () => {
-      const result = await fetch('/api/todo/archive');
+      const result = await fetch(`/api/todo/archive/${session?.user.id}`);
       if (!result.ok) throw new Error('Cannot get todos');
       return (await result.json()) as { data: Array<Todo> };
     },

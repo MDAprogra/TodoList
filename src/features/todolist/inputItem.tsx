@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Todo } from '@/generated/prisma/client';
+import { authClient } from '@/lib/auth-client';
 import { useMutation } from '@tanstack/react-query';
 import { ChevronDownIcon } from 'lucide-react';
 import React from 'react';
@@ -32,12 +33,13 @@ type CreateTodoFormValues = {
 
 export const InputItem = () => {
   const [open, setOpen] = React.useState(false);
+  const { data: session } = authClient.useSession();
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (
       todo: Omit<CreateTodoFormValues, 'deadline'> & { deadline: string }
     ) => {
-      const result = await fetch('/api/todo', {
+      const result = await fetch(`/api/todo/users/${session?.user.id}`, {
         method: 'POST',
         body: JSON.stringify(todo),
       });
