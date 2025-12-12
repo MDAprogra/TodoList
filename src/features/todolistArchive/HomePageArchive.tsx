@@ -5,6 +5,7 @@ import { Todo } from '@/generated/prisma/client';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { TodoListItem } from '../todolist/todolistItem';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export const HomePageArchive = () => {
   const { data, isLoading } = useQuery({
@@ -38,7 +39,9 @@ export const HomePageArchive = () => {
         <h1 className="mb-4 text-4xl font-bold tracking-tight text-heading md:text-5xl lg:text-6xl items-center p-3">
           Todo List
         </h1>
+        <Button asChild variant={'outline'}>
         <Link href="/">Go Back</Link>
+        </Button>
 
         {isLoading && (
           <div className="flex gap-2 items-center">
