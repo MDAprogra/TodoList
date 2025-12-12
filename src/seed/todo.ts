@@ -7,6 +7,7 @@ const todosToCreate = Array.from(Array(10)).map(() => ({
   label: faker.lorem.sentence(),
   priority: faker.helpers.arrayElement(['HIGH', 'MEDIUM', 'LOW']),
   status: faker.helpers.arrayElement(['CHECKED', 'NOT_CHECKED']),
+  isDeleted: false,
 }));
 
 try {
