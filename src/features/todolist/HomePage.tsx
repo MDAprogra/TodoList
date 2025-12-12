@@ -6,6 +6,9 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { InputItem } from './inputItem';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { authClient } from '@/lib/auth-client';
+
+import { useRouter } from 'next/navigation';
 
 export const HomePage = () => {
   const { data, isLoading } = useQuery({
@@ -32,6 +35,7 @@ export const HomePage = () => {
   });
 
   const todos = data?.data || [];
+  const router = useRouter();
 
   return (
     <>
@@ -41,6 +45,20 @@ export const HomePage = () => {
         </h1>
         <Button asChild variant={'outline'}>
           <Link href="/archive">Archive</Link>
+        </Button>
+
+        <Button
+          onClick={() =>
+            authClient.signOut({
+              fetchOptions: {
+                onSuccess: () => {
+                  router.push('/sign-in');
+                },
+              },
+            })
+          }
+        >
+          Logout
         </Button>
 
         <InputItem />

@@ -1,8 +1,8 @@
+import { HomePage } from '@/features/todolist/HomePage';
 import dayjs from 'dayjs';
 import 'dayjs/locale/fr';
-import { redirect } from 'next/navigation';
 
 export default function Home() {
   dayjs.locale('fr');
-  return redirect('sign-in');
+  return <HomePage />;
 }
