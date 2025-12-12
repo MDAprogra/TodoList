@@ -1,16 +1,16 @@
 'use client';
-import { Spinner } from '@/components/ui/spinner';
-import { TodoListItem } from '@/features/todolist/todolistItem';
-import { Todo } from '@/generated/prisma/client';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { InputItem } from './inputItem';
-import Link from 'next/link';
 
-export const HomePage = () => {
+import { Spinner } from "@/components/ui/spinner";
+import { Todo } from "@/generated/prisma/client";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { TodoListItem } from "../todolist/todolistItem";
+import Link from "next/link";
+
+export const HomePageArchive = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['todos'],
     queryFn: async () => {
-      const result = await fetch('/api/todo');
+      const result = await fetch('/api/todo/archive');
       if (!result.ok) throw new Error('Cannot get todos');
       return (await result.json()) as { data: Array<Todo> };
     },
@@ -18,7 +18,7 @@ export const HomePage = () => {
 
   const { mutate } = useMutation({
     mutationFn: async (todo: Todo) => {
-      const result = await fetch('/api/todo', {
+      const result = await fetch('/api/todo/archive', {
         method: 'POST',
         body: JSON.stringify(todo),
       });
@@ -38,9 +38,8 @@ export const HomePage = () => {
         <h1 className="mb-4 text-4xl font-bold tracking-tight text-heading md:text-5xl lg:text-6xl items-center p-3">
           Todo List
         </h1>
-        <Link href="/archive">Archive</Link>
+        <Link href="/">Go Back</Link>
 
-        <InputItem />
 
         {isLoading && (
           <div className="flex gap-2 items-center">
@@ -52,8 +51,8 @@ export const HomePage = () => {
           <TodoListItem
             todo={todo}
             key={todo.id}
-            disableDeleteButton={false}
             onChange={() => mutate(todo)}
+            disableDeleteButton={true}
           />
         ))}
       </div>

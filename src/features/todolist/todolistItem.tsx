@@ -12,12 +12,14 @@ import { Spinner } from '@/components/ui/spinner';
 
 export type TodoListItemProps = {
   todo: Todo;
+  disableDeleteButton : boolean;
   onChange: (newStatus: 'CHECKED' | 'NOT_CHECKED') => void;
 } & Omit<ComponentProps<typeof Item>, 'onChange'>;
 
 export const TodoListItem = ({
   todo,
   onChange,
+  disableDeleteButton = false,
   ...rest
 }: TodoListItemProps) => {
   const { mutate, isPending } = useMutation({
@@ -75,10 +77,10 @@ export const TodoListItem = ({
               {todo.priority}
             </Badge>
           )}
-
-          <Button onClick={() => mutate()} disabled={isPending}>
+          {!disableDeleteButton && <Button onClick={() => mutate()} disabled={isPending || disableDeleteButton}>
             {isPending ? <Spinner /> : 'Delete'}
-          </Button>
+          </Button>}
+          
         </Item>
       </div>
     </>
