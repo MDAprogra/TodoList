@@ -1,11 +1,13 @@
 import { prisma } from '@/lib/prisma';
 
-export async function GET(_req: Request,
+export async function GET(
+  _req: Request,
   {
     params,
   }: {
     params: Promise<{ idUser: string }>;
-  }) {
+  }
+) {
   const todos = await prisma.todo.findMany({
     where: {
       isDeleted: true,

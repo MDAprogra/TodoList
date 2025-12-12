@@ -51,42 +51,57 @@ export const PageSignUp = () => {
 
   return (
     <>
-      <h1>Sign up</h1>
+      <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+        <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">Sign up</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex gap-3 w-full p-3">
-        <div className="w-full max-w-md">
-          <FieldSet>
-            <FieldGroup>
-              <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
-                <Input
-                  id="email"
-                  type="text"
-                  placeholder="your-email@example.com"
-                  {...register('email')}
-                />
-                <FieldDescription>Write your name account</FieldDescription>
-              </Field>
-              <Field>
-                <FieldLabel htmlFor="name">Name</FieldLabel>
-                <Input id="name" type="text" {...register('name')} />
-                <FieldDescription>Write your email account</FieldDescription>
-              </Field>
-              <Field>
-                <FieldLabel htmlFor="password">Password</FieldLabel>
-                <FieldDescription>Write your password account</FieldDescription>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="••••••••"
-                  {...register('password')}
-                />
-              </Field>
-            </FieldGroup>
-          </FieldSet>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <FieldSet>
+          <FieldGroup className="space-y-5">
+            <Field>
+          <FieldLabel htmlFor="email" className="text-gray-700 font-medium mb-2 block">Email</FieldLabel>
+          <Input
+            id="email"
+            type="email"
+            placeholder="your-email@example.com"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            {...register('email')}
+          />
+          <FieldDescription className="text-gray-500 text-sm mt-1">Write your email account</FieldDescription>
+            </Field>
+            <Field>
+          <FieldLabel htmlFor="name" className="text-gray-700 font-medium mb-2 block">Name</FieldLabel>
+          <Input
+            id="name"
+            type="text"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            {...register('name')}
+          />
+          <FieldDescription className="text-gray-500 text-sm mt-1">Write your name account</FieldDescription>
+            </Field>
+            <Field>
+          <FieldLabel htmlFor="password" className="text-gray-700 font-medium mb-2 block">Password</FieldLabel>
+          <Input
+            id="password"
+            type="password"
+            placeholder="••••••••"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            {...register('password')}
+          />
+          <FieldDescription className="text-gray-500 text-sm mt-1">Write your password account</FieldDescription>
+            </Field>
+          </FieldGroup>
+        </FieldSet>
+
+        <button
+          type="submit"
+          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200"
+        >
+          Sign up
+        </button>
+          </form>
         </div>
-        <Input type="submit" />
-      </form>
+      </div>
     </>
   );
 };

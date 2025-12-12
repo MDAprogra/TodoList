@@ -9,10 +9,9 @@ import { Button } from '@/components/ui/button';
 import { authClient } from '@/lib/auth-client';
 
 export const HomePageArchive = () => {
-
   const { data: session } = authClient.useSession();
   const { data, isLoading } = useQuery({
-    queryKey: ['todos',session?.user.id],
+    queryKey: ['todos', session?.user.id],
     queryFn: async () => {
       const result = await fetch(`/api/todo/archive/${session?.user.id}`);
       if (!result.ok) throw new Error('Cannot get todos');
