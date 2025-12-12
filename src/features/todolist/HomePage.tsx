@@ -11,10 +11,12 @@ import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 
 export const HomePage = () => {
+  const { data: session } = authClient.useSession();
+
   const { data, isLoading } = useQuery({
-    queryKey: ['todos'],
+    queryKey: ['todos', session?.user.id],
     queryFn: async () => {
-      const result = await fetch('/api/todo');
+      const result = await fetch(`/api/todo/users/${session?.user.id}`);
       if (!result.ok) throw new Error('Cannot get todos');
       return (await result.json()) as { data: Array<Todo> };
     },
@@ -22,7 +24,7 @@ export const HomePage = () => {
 
   const { mutate } = useMutation({
     mutationFn: async (todo: Todo) => {
-      const result = await fetch('/api/todo', {
+      const result = await fetch(`/api/todo/users/${session?.user.id}`, {
         method: 'POST',
         body: JSON.stringify(todo),
       });

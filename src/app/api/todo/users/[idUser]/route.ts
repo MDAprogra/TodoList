@@ -1,11 +1,20 @@
 import { prisma } from '@/lib/prisma';
 import { PrismaClientValidationError } from '@prisma/client/runtime/client';
 
-export async function GET() {
+export async function GET(
+  _req: Request,
+  {
+    params,
+  }: {
+    params: Promise<{ idUser: string }>;
+  }
+) {
   const todos = await prisma.todo.findMany({
-    where: {
-      isDeleted: false,
-    },
+    where:
+      {
+        isDeleted: false,
+        userId: (await params).idUser,
+      },
     orderBy: [
       {
         status: 'desc',
