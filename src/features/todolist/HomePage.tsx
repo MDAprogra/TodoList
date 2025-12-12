@@ -55,7 +55,7 @@ export const HomePage = () => {
           <TodoListItem
             todo={todo}
             key={todo.id}
-            disableDeleteButton={false}
+            disableComponent={false}
             onChange={() => mutate(todo)}
           />
         ))}

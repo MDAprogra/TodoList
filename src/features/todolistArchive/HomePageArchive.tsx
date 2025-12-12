@@ -54,7 +54,7 @@ export const HomePageArchive = () => {
             todo={todo}
             key={todo.id}
             onChange={() => mutate(todo)}
-            disableDeleteButton={true}
+            disableComponent={true}
           />
         ))}
       </div>

@@ -10,7 +10,7 @@ export async function GET() {
         status: 'desc',
       },
       {
-        createdAt: 'desc',
+        updatedAt: 'desc',
       },
     ],
   });
