@@ -1,9 +1,15 @@
-"use client";
-import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field';
+'use client';
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+  FieldSet,
+} from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
-import { SubmitHandler, useForm} from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 type CreateDataFormValues = {
   email: string;
@@ -15,12 +21,12 @@ type CreateDataFormValues = {
 
 export const PageSignUp = () => {
   const {
-      handleSubmit,
-      register,
-      formState: { errors },
-    } = useForm<CreateDataFormValues>();
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<CreateDataFormValues>();
 
-    const router = useRouter();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<CreateDataFormValues> = (data) => {
     authClient.signUp.email(
@@ -36,9 +42,9 @@ export const PageSignUp = () => {
           // display the error message
           alert(ctx.error.message);
         },
-        onSuccess:()=> {
-            router.replace('/')
-        }
+        onSuccess: () => {
+          router.replace('/');
+        },
       }
     );
   };
@@ -63,22 +69,23 @@ export const PageSignUp = () => {
               </Field>
               <Field>
                 <FieldLabel htmlFor="name">Name</FieldLabel>
-                <Input
-                  id="name"
-                  type="text"
-                  {...register('name')}
-                />
+                <Input id="name" type="text" {...register('name')} />
                 <FieldDescription>Write your email account</FieldDescription>
               </Field>
               <Field>
                 <FieldLabel htmlFor="password">Password</FieldLabel>
                 <FieldDescription>Write your password account</FieldDescription>
-                <Input id="password" type="password" placeholder="••••••••" {...register('password')} />
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  {...register('password')}
+                />
               </Field>
             </FieldGroup>
           </FieldSet>
         </div>
-        <Input type="submit"  />
+        <Input type="submit" />
       </form>
     </>
   );

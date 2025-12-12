@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { Button } from '@/components/ui/button';
 import {
   Field,
@@ -72,7 +72,12 @@ export const PageSignIn = () => {
               <Field>
                 <FieldLabel htmlFor="password">Password</FieldLabel>
                 <FieldDescription>Write your password account</FieldDescription>
-                <Input id="password" type="password" placeholder="••••••••" {...register('password')}/>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  {...register('password')}
+                />
               </Field>
             </FieldGroup>
           </FieldSet>
@@ -81,7 +86,6 @@ export const PageSignIn = () => {
       </form>
       <Button asChild variant={'link'}>
         <Link href="/sign-up">Don&apos;t have an account? Create it ...</Link>
-
       </Button>
     </>
   );
