@@ -10,11 +10,10 @@ export async function GET(
   }
 ) {
   const todos = await prisma.todo.findMany({
-    where:
-      {
-        isDeleted: false,
-        userId: (await params).idUser,
-      },
+    where: {
+      isDeleted: false,
+      userId: (await params).idUser,
+    },
     orderBy: [
       {
         status: 'desc',
