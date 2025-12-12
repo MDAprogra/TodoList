@@ -5,6 +5,9 @@ import { cx } from 'class-variance-authority';
 import type { Todo } from '@/generated/prisma/client';
 import { ComponentProps } from 'react';
 import dayjs from 'dayjs';
+import { Button } from '@/components/ui/button';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 export type TodoListItemProps = {
   todo: Todo;
@@ -16,6 +19,31 @@ export const TodoListItem = ({
   onChange,
   ...rest
 }: TodoListItemProps) => {
+
+
+
+  
+  const { mutate, isPending } = useMutation({
+    mutationFn: async () => {
+      const result = await fetch(`/api/todo/${todo.id}`, {
+        method: 'DELETE',
+      });
+
+      if (!result.ok) {
+        throw new Error('Erreur dans la suppression ...');
+      }
+      return (await result.json()) as { data: Todo };
+    },
+    onSuccess: (_data, _vars, _onMutate, ctx) => {
+      ctx.client.invalidateQueries({ queryKey: ['todos'] });
+    },
+    onError: (error) => {
+      toast.error('Oups... We have an error.', {
+        description: error.message,
+      });
+    },
+  });
+
   return (
     <>
       <div className="ml-64 mr-64">
@@ -50,6 +78,13 @@ export const TodoListItem = ({
               {todo.priority}
             </Badge>
           )}
+
+          <Button
+          onClick={() => mutate()}
+          disabled={isPending}
+          >
+            {isPending ? 'Suppression...' : 'Delete'}
+            </Button>
         </Item>
       </div>
     </>

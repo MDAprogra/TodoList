@@ -3,6 +3,9 @@ import { PrismaClientValidationError } from '@prisma/client/runtime/client';
 
 export async function GET() {
   const todos = await prisma.todo.findMany({
+    where: {
+      isDeleted: false
+    },
     orderBy: [
       {
         status: 'desc',
