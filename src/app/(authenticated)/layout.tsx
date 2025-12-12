@@ -14,11 +14,10 @@ export default async function AuthenticatedLayout({
     redirect('/sign-in');
   }
 
-  return(<>
-    <header>
-        Bonjour, {session.user.name}
-    </header>
-    {children}
+  return (
+    <>
+      <header>Bonjour, {session.user.name}</header>
+      {children}
     </>
-);
+  );
 }
